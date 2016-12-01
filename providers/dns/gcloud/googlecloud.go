@@ -6,14 +6,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"time"
 
 	"github.com/xenolf/lego/acme"
-
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2/google"
-
 	"google.golang.org/api/dns/v1"
 )
 
@@ -33,20 +32,31 @@ func NewDNSProvider() (*DNSProvider, error) {
 	}
 
 	project := os.Getenv("GCE_PROJECT")
-	return NewDNSProviderCredentials(project)
+	return NewDNSProviderCredentials(project, nil)
 }
 
 // NewDNSProviderCredentials uses the supplied credentials to return a
 // DNSProvider instance configured for Google Cloud DNS.
-func NewDNSProviderCredentials(project string) (*DNSProvider, error) {
+func NewDNSProviderCredentials(project string, jsonKey []byte) (*DNSProvider, error) {
 	if project == "" {
 		return nil, fmt.Errorf("Google Cloud project name missing")
 	}
 
-	client, err := google.DefaultClient(context.Background(), dns.NdevClouddnsReadwriteScope)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get Google Cloud client: %v", err)
+	var client *http.Client
+	var err error
+	if jsonKey == nil {
+		client, err = google.DefaultClient(context.Background(), dns.NdevClouddnsReadwriteScope)
+		if err != nil {
+			return nil, fmt.Errorf("Unable to get Google Cloud client: %v", err)
+		}
+	} else {
+		conf, err := google.JWTConfigFromJSON(jsonKey, dns.NdevClouddnsReadwriteScope)
+		if err != nil {
+			return nil, fmt.Errorf("Unable to load JWT config from Google Service Account file: %v", err)
+		}
+		client = conf.Client(context.Background())
 	}
+
 	svc, err := dns.New(client)
 	if err != nil {
 		return nil, fmt.Errorf("unable to create Google Cloud DNS service: %v", err)
