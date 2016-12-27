@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/miekg/dns"
+	"golang.org/x/net/publicsuffix"
 )
 
 type preCheckDNSFunc func(fqdn, value string) (bool, error)
@@ -264,9 +265,19 @@ func FindZoneByFqdn(fqdn string, nameservers []string) (string, error) {
 
 			for _, ans := range in.Answer {
 				if soa, ok := ans.(*dns.SOA); ok {
-					zone := soa.Hdr.Name
-					fqdnToZone[fqdn] = zone
-					return zone, nil
+					if strings.HasSuffix(fqdn, soa.Hdr.Name) {
+						zone := soa.Hdr.Name
+						fqdnToZone[fqdn] = zone
+						return zone, nil
+					} else if zone, err := publicsuffix.EffectiveTLDPlusOne(UnFqdn(fqdn)); err == nil {
+						zone = ToFqdn(zone)
+						fqdnToZone[fqdn] = zone
+						return zone, nil
+					} else {
+						zone = soa.Hdr.Name
+						fqdnToZone[fqdn] = zone
+						return zone, nil
+					}
 				}
 			}
 		}
