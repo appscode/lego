@@ -282,7 +282,12 @@ func run(c *cli.Context) error {
 
 	if hasDomains {
 		// obtain a certificate, generating a new private key
-		cert, failures = client.ObtainCertificate(c.GlobalStringSlice("domains"), !c.Bool("no-bundle"), nil, c.Bool("must-staple"))
+		var err error
+		cert, err = client.ObtainCertificate(c.GlobalStringSlice("domains"), !c.Bool("no-bundle"), nil, c.Bool("must-staple"))
+		if err != nil {
+			// we couldn't read the CSR
+			failures = map[string]error{"csr": err}
+		}
 	} else {
 		// read the CSR
 		csr, err := readCSRFile(c.GlobalString("csr"))
@@ -291,7 +296,11 @@ func run(c *cli.Context) error {
 			failures = map[string]error{"csr": err}
 		} else {
 			// obtain a certificate for this CSR
-			cert, failures = client.ObtainCertificateForCSR(*csr, !c.Bool("no-bundle"))
+			var err error
+			cert, err = client.ObtainCertificateForCSR(*csr, !c.Bool("no-bundle"))
+			if err != nil {
+				failures = map[string]error{"csr": err}
+			}
 		}
 	}
 
