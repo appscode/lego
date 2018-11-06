@@ -383,7 +383,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:cc7e2aaaa87d7bf0e7d08baede383b27984eec7175a4bc504255352c77166a4d"
+  digest = "1:880b3aa4fb812e2875b1d8f79a13c079c1dfd34ef1bb42055dc4746c71032299"
   name = "golang.org/x/oauth2"
   packages = [
     ".",
@@ -393,7 +393,7 @@
     "jwt",
   ]
   pruneopts = "NUT"
-  revision = "ec22f46f877b4505e0117eeaab541714644fdd28"
+  revision = "ca4130e427c7982e64cb9b5e717ff67bdb725037"
 
 [[projects]]
   branch = "master"
