@@ -270,11 +270,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:4e9d94fd7812a4c41e403796decb682a8f18fa50fa1f48532967dddc279303f5"
+  digest = "1:f703c1f05c29329026c4f49bd6c71442537e1f964d3a4f310982702a293f28c6"
   name = "github.com/ovh/go-ovh"
   packages = ["ovh"]
   pruneopts = "NUT"
-  revision = "91b7eb631d2eced3e706932a0b36ee8b5ee22e92"
+  revision = "ba5adb4cf0148a3dbdbd30586f075266256a77b1"
 
 [[projects]]
   digest = "1:5cf3f025cbee5951a4ee961de067c8a89fc95a5adabead774f82822efabab121"
