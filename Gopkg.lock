@@ -448,7 +448,7 @@
 
 [[projects]]
   branch = "v2"
-  digest = "1:f57d15cb0f61c985f61fd2c529245debb439128ecc8c44c06251900d281c68fc"
+  digest = "1:ff76ec2279e798fa55260d15642af2b6f6c261043a96ed3c8191638a293a60ed"
   name = "gopkg.in/ns1/ns1-go.v2"
   packages = [
     "rest",
@@ -459,7 +459,7 @@
     "rest/model/monitor",
   ]
   pruneopts = "NUT"
-  revision = "a5bcac82d3f637d3928d30476610891935b2d691"
+  revision = "e7e7ce799fd3630fd38b81bdf052551cd879feab"
 
 [[projects]]
   digest = "1:c25ddb3b9fc4ec258f94a4e10b5e7eab434e3e5a5a21fef1dbe1749155abf7b2"
