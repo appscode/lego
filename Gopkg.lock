@@ -302,7 +302,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:cd3baee48de2e9fc878d4099b8ea0601b6babd525d61c65a86dd3572b08ae964"
+  digest = "1:74b43da05092fa2ae71d20cbb19790fb0868fdbba6a9522e6b311d403835ce80"
   name = "github.com/sacloud/libsacloud"
   packages = [
     ".",
@@ -311,7 +311,7 @@
     "sacloud/ostype",
   ]
   pruneopts = "NUT"
-  revision = "178aa57136e8c6e3882b6b5ef37a48f0e7cf836f"
+  revision = "eac8fe127757259c2ad10ee2572a63e468186950"
 
 [[projects]]
   digest = "1:6989062eb7ccf25cf38bf4fe3dba097ee209f896cda42cefdca3927047bef7b6"
