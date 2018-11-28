@@ -354,7 +354,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:55aa7c2f4c2196b10eb56a589666cf132054f2950b2272d9ff4e0c2921600888"
+  digest = "1:882649c72e4dd07856d8b28446e0204e7328c7f90f33f5e6c6aaed381b7b5f33"
   name = "golang.org/x/crypto"
   packages = [
     "ed25519",
@@ -363,7 +363,7 @@
     "ssh/terminal",
   ]
   pruneopts = "NUT"
-  revision = "ab813273cd59e1333f7ae7bff5d027d4aadf528c"
+  revision = "eb0de9b17e854e9b1ccd9963efafc79862359959"
 
 [[projects]]
   branch = "master"
