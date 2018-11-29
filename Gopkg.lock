@@ -408,7 +408,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:da32ebe70dd3ec97d2df26281b08b18d05c2f12491ae79f389813f6c8d3006b3"
+  digest = "1:358edc3f9db04d19b50a6dea9210456f878fec680fdcee674735b76d11a131ac"
   name = "google.golang.org/api"
   packages = [
     "dns/v1",
@@ -417,7 +417,7 @@
     "googleapi/internal/uritemplates",
   ]
   pruneopts = "NUT"
-  revision = "de943baf05a022a8f921b544b7827bacaba1aed5"
+  revision = "0a71a4356c3f4bcbdd16294c78ca2a31fda36cca"
 
 [[projects]]
   digest = "1:7206d98ec77c90c72ec2c405181a1dcf86965803b6dbc4f98ceab7a5047c37a9"
