@@ -136,11 +136,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:e8055cec2992f8bbf63c390aa6b36d78c2f93b13617e4569168c09219f88c6b0"
+  digest = "1:df4f5dd46731633f2886e9b85ca4507093817e9038c229633ffc7eb022ee76b5"
   name = "github.com/dnsimple/dnsimple-go"
   packages = ["dnsimple"]
   pruneopts = "NUT"
-  revision = "bbe1a2c87affea187478e24d3aea3cac25f870b3"
+  revision = "df512a2fef8416977f8a4e3ccfb344a4de459e94"
 
 [[projects]]
   digest = "1:82127d77b40b617d650e64dc287cfc190f31d1030bd01cae5110780dd1e5bbb3"
