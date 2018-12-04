@@ -367,7 +367,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:008bb6a09679c9b8381873d8c2a11774b81f393ecb1dce18ad70cdcf8643316d"
+  digest = "1:f60eb1992cafe8527b7bcfe78bfd3da79a52bad5a29a6b8f6132051b592f6dce"
   name = "golang.org/x/net"
   packages = [
     "bpf",
@@ -379,7 +379,7 @@
     "ipv6",
   ]
   pruneopts = "NUT"
-  revision = "75944861c7512f64725d687546cfbc757626151f"
+  revision = "351d144fa1fc0bd934e2408202be0c29f25e35a0"
 
 [[projects]]
   branch = "master"
