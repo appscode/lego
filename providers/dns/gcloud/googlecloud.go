@@ -51,19 +51,29 @@ func NewDNSProvider() (*DNSProvider, error) {
 	}
 
 	project := os.Getenv("GCE_PROJECT")
-	return NewDNSProviderCredentials(project)
+	return NewDNSProviderCredentials(project, nil)
 }
 
 // NewDNSProviderCredentials uses the supplied credentials
 // to return a DNSProvider instance configured for Google Cloud DNS.
-func NewDNSProviderCredentials(project string) (*DNSProvider, error) {
+func NewDNSProviderCredentials(project string, jsonKey []byte) (*DNSProvider, error) {
 	if project == "" {
 		return nil, fmt.Errorf("googlecloud: project name missing")
 	}
 
-	client, err := google.DefaultClient(context.Background(), dns.NdevClouddnsReadwriteScope)
-	if err != nil {
-		return nil, fmt.Errorf("googlecloud: unable to get Google Cloud client: %v", err)
+	var client *http.Client
+	var err error
+	if jsonKey == nil {
+		client, err = google.DefaultClient(context.Background(), dns.NdevClouddnsReadwriteScope)
+		if err != nil {
+			return nil, fmt.Errorf("googlecloud: unable to get Google Cloud client: %v", err)
+		}
+	} else {
+		conf, err := google.JWTConfigFromJSON(jsonKey, dns.NdevClouddnsReadwriteScope)
+		if err != nil {
+			return nil, fmt.Errorf("googlecloud: unable to load JWT config from Google Service Account file: %v", err)
+		}
+		client = conf.Client(context.Background())
 	}
 
 	config := NewDefaultConfig()

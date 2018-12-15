@@ -121,7 +121,7 @@ func TestLivePresent(t *testing.T) {
 
 	envTest.RestoreEnv()
 
-	provider, err := NewDNSProviderCredentials(envTest.GetValue("GCE_PROJECT"))
+	provider, err := NewDNSProviderCredentials(envTest.GetValue("GCE_PROJECT"), nil)
 	require.NoError(t, err)
 
 	err = provider.Present(envTest.GetDomain(), "", "123d==")
@@ -135,7 +135,7 @@ func TestLivePresentMultiple(t *testing.T) {
 
 	envTest.RestoreEnv()
 
-	provider, err := NewDNSProviderCredentials(envTest.GetValue("GCE_PROJECT"))
+	provider, err := NewDNSProviderCredentials(envTest.GetValue("GCE_PROJECT"), nil)
 	require.NoError(t, err)
 
 	// Check that we're able to create multiple entries
@@ -153,7 +153,7 @@ func TestLiveCleanUp(t *testing.T) {
 
 	envTest.RestoreEnv()
 
-	provider, err := NewDNSProviderCredentials(envTest.GetValue("GCE_PROJECT"))
+	provider, err := NewDNSProviderCredentials(envTest.GetValue("GCE_PROJECT"), nil)
 	require.NoError(t, err)
 
 	time.Sleep(1 * time.Second)
