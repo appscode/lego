@@ -11,6 +11,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/client"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
 	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/route53"
@@ -80,7 +82,7 @@ func NewDNSProvider() (*DNSProvider, error) {
 	return NewDNSProviderConfig(NewDefaultConfig())
 }
 
-// NewDNSProviderConfig takes a given config ans returns a custom configured DNSProvider instance
+// NewDNSProviderConfig takes a given config and returns a custom configured DNSProvider instance
 func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 	if config == nil {
 		return nil, errors.New("route53: the configuration of the Route53 DNS provider is nil")
@@ -90,7 +92,37 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 	retry.NumMaxRetries = config.MaxRetries
 	sessionCfg := request.WithRetryer(aws.NewConfig(), retry)
 
-	sess, err := session.NewSessionWithOptions(session.Options{Config: *sessionCfg})
+	sess, err := session.NewSessionWithOptions(session.Options{
+		Config: *sessionCfg,
+		// Support MFA when authing using assumed roles.
+		SharedConfigState:       session.SharedConfigEnable,
+		AssumeRoleTokenProvider: stscreds.StdinTokenProvider,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	cl := route53.New(sess)
+	return &DNSProvider{client: cl, config: config}, nil
+}
+
+// NewDNSProviderCredentials takes aws credentials and returns a custom configured DNSProvider instance
+func NewDNSProviderCredentials(accessKeyId, secretAccessKey, hostedZoneID string) (*DNSProvider, error) {
+	config := NewDefaultConfig()
+	config.HostedZoneID = hostedZoneID
+	r := customRetryer{}
+	r.NumMaxRetries = config.MaxRetries
+	sessionCfg := aws.Config{
+		Credentials: credentials.NewStaticCredentials(accessKeyId, secretAccessKey, ""),
+		Retryer:     r,
+		Region:      aws.String("us-east-1"),
+	}
+	sess, err := session.NewSessionWithOptions(session.Options{
+		Config: sessionCfg,
+		// Support MFA when authing using assumed roles.
+		SharedConfigState:       session.SharedConfigEnable,
+		AssumeRoleTokenProvider: stscreds.StdinTokenProvider,
+	})
 	if err != nil {
 		return nil, err
 	}
